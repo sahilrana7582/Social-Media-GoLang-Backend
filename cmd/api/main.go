@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 )
 
@@ -14,7 +13,8 @@ func main() {
 		config: config,
 	}
 
-	fmt.Println("Starting server on port", config.addr)
-
-	log.Fatal(app.run())
+	mux := app.mount()
+	if err := app.run(mux); err != nil {
+		log.Fatal(err)
+	}
 }
